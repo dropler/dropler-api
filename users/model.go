@@ -2,17 +2,11 @@ package users
 
 import (
 	"code.google.com/p/go.crypto/bcrypt"
+	"dropler-new/models"
 	"dropler-new/store"
 	"log"
 	"strings"
-	"time"
 )
-
-// TimeStamp struct for the Model Interface
-type TimeStamp struct {
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-}
 
 // User model struct
 type User struct {
@@ -20,7 +14,7 @@ type User struct {
 	Name           string `form:"name"json:"name"`
 	Email          string `form:"email"json:"email"`
 	HashedPassword string `json:"hashed_password"`
-	TimeStamp
+	models.TimeStamp
 }
 
 type UserList []User
@@ -67,20 +61,6 @@ func (u *User) GetById(id string) error {
 	}
 
 	return nil
-}
-
-// UpdateTime Method for setting/updating the time
-// struct elements
-func (t *TimeStamp) UpdateTime() {
-
-	currentTime := time.Now().UTC()
-	if !t.CreatedAt.IsZero() {
-		t.UpdatedAt = currentTime
-		return
-	}
-	t.CreatedAt = currentTime
-	t.UpdatedAt = currentTime
-	return
 }
 
 // SetPassword Method on User model for setting the hashed password
