@@ -1,0 +1,15 @@
+test:
+    driver: postgres
+    open: user=begizi dbname=dropler_dev sslmode=disable
+
+development:
+    driver: postgres
+    open: user=begizi dbname=dropler_dev sslmode=disable
+
+production:
+    driver: postgres
+    open: user=begizi dbname=dropler sslmode=disable
+
+environment_variable_config:
+    driver: $DB_DRIVER
+    open: localhost
