@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dropler-new/clients"
 	"dropler-new/drops"
 	"dropler-new/store"
 	"dropler-new/users"
@@ -8,7 +9,8 @@ import (
 
 func setupDb() {
 	// Setup the db config options for each component
-	users.SetupDb(store.Db)
+	clients.SetupDb(store.Db)
 	drops.SetupDb(store.Db)
+	users.SetupDb(store.Db)
 	return
 }
