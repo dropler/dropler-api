@@ -80,3 +80,12 @@ func (u *User) SetPassword(password string) error {
 func (u *User) CheckPassword(password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(u.HashedPassword), []byte(password))
 }
+
+// FindByEmail Method for returning a single user row from
+// a provided email param.
+func (u *User) FindByEmail(email string) error {
+
+	err := store.Db.SelectOne(u, "select * from users where email=$1", email)
+
+	return err
+}
