@@ -35,3 +35,16 @@ func Create(c *gin.Context) {
 	c.JSON(200, d)
 	return
 }
+
+func GetClient(c *gin.Context) {
+	d := Client{}
+	id := c.Params.ByName("id")
+
+	err := d.GetById(id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Problem fetching client. No database connection?"})
+		return
+	}
+
+	c.JSON(200, d)
+}

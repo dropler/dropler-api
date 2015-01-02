@@ -48,6 +48,11 @@ func (c *Client) Create() error {
 	return err
 }
 
+func (c *Client) GetById(id string) error {
+	err := store.Db.SelectOne(c, "SELECT * FROM clients WHERE ID=$1", id)
+	return err
+}
+
 // GetClientByID Method for returning a single client row.
 func (c *Client) GetClientByID(id string) error {
 

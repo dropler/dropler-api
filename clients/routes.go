@@ -8,5 +8,5 @@ func SetupRoutes(r *gin.RouterGroup) {
 	clientGroup := r.Group("/clients")
 	clientGroup.GET("", List)
 	clientGroup.POST("", Create)
-	// clientGroup.GET("/:id", GetUser)
+	clientGroup.GET("/:id", GetClient)
 }
