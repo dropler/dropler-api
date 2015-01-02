@@ -6,5 +6,6 @@ import (
 
 func SetupRoutes(r *gin.RouterGroup) {
 	r.GET("/authorize", Authorize)
+	r.POST("/authorize", Authorize)
 	r.GET("/token", Token)
 }
