@@ -2,8 +2,8 @@ package users
 
 import (
 	"code.google.com/p/go.crypto/bcrypt"
-	"dropler-new/models"
-	"dropler-new/store"
+	"dropler/models"
+	"dropler/store"
 	"log"
 	"strings"
 )

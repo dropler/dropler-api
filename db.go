@@ -1,10 +1,10 @@
 package main
 
 import (
-	"dropler-new/clients"
-	"dropler-new/drops"
-	"dropler-new/store"
-	"dropler-new/users"
+	"dropler/clients"
+	"dropler/drops"
+	"dropler/store"
+	"dropler/users"
 )
 
 func setupDb() {

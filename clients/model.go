@@ -2,8 +2,8 @@ package clients
 
 import (
 	"code.google.com/p/go-uuid/uuid"
-	"dropler-new/models"
-	"dropler-new/store"
+	"dropler/models"
+	"dropler/store"
 	"encoding/base64"
 	"log"
 )

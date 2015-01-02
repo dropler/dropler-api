@@ -1,7 +1,7 @@
 package oauth
 
 import (
-	"dropler-new/users"
+	"dropler/users"
 	"fmt"
 	"github.com/RangelReale/osin"
 	"github.com/gin-gonic/gin"

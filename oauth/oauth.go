@@ -1,7 +1,7 @@
 package oauth
 
 import (
-	"dropler-new/clients"
+	"dropler/clients"
 	"errors"
 	"fmt"
 	"github.com/RangelReale/osin"

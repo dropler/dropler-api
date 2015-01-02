@@ -1,10 +1,10 @@
 package main
 
 import (
-	"dropler-new/clients"
-	"dropler-new/drops"
-	"dropler-new/oauth"
-	"dropler-new/users"
+	"dropler/clients"
+	"dropler/drops"
+	"dropler/oauth"
+	"dropler/users"
 	"github.com/gin-gonic/gin"
 )
 

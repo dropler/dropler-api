@@ -1,8 +1,8 @@
 package drops
 
 import (
-	"dropler-new/models"
-	"dropler-new/store"
+	"dropler/models"
+	"dropler/store"
 	"log"
 )
 
