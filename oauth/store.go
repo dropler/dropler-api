@@ -12,8 +12,6 @@ var (
 	OauthServer = newAuthServer()
 )
 
-type oauthStorage struct{}
-
 func newAuthServer() *osin.Server {
 	authConfig := osin.NewServerConfig()
 
@@ -32,6 +30,8 @@ func newAuthStorage() *oauthStorage {
 	s := &oauthStorage{}
 	return s
 }
+
+type oauthStorage struct{}
 
 func (s *oauthStorage) Clone() osin.Storage {
 	return s
