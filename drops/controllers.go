@@ -1,14 +1,12 @@
 package drops
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
 
 // List Method for returning all users as array of objects
 func List(c *gin.Context) {
-	fmt.Println("In Drop List Controller")
 	d := DropList{}
 
 	err := d.List()
