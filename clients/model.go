@@ -2,7 +2,7 @@ package clients
 
 import (
 	"code.google.com/p/go-uuid/uuid"
-	"dropler/models"
+	"dropler/models/time"
 	"dropler/store"
 	"encoding/base64"
 	"log"

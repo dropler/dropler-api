@@ -2,7 +2,7 @@ package users
 
 import (
 	"code.google.com/p/go.crypto/bcrypt"
-	"dropler/models"
+	"dropler/models/time"
 	"dropler/store"
 	"log"
 	"strings"

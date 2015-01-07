@@ -1,7 +1,7 @@
 package drops
 
 import (
-	"dropler/models"
+	"dropler/models/time"
 	"dropler/store"
 	"log"
 )
