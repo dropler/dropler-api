@@ -1,10 +1,8 @@
 package clients
 
-import (
-	"github.com/begizi/gorp"
-)
+import "dropler/store"
 
-func SetupDb(g *gorp.DbMap) {
-	g.AddTableWithName(Client{}, "clients").SetKeys(true, "Id")
+func init() {
+	store.Db.AddTableWithName(Client{}, "clients").SetKeys(true, "Id")
 	return
 }

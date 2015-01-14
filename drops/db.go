@@ -1,10 +1,8 @@
 package drops
 
-import (
-	"github.com/begizi/gorp"
-)
+import "dropler/store"
 
-func SetupDb(g *gorp.DbMap) {
-	g.AddTableWithName(Drop{}, "drops").SetKeys(true, "Id")
+func init() {
+	store.Db.AddTableWithName(Drop{}, "drops").SetKeys(true, "Id")
 	return
 }

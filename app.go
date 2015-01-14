@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	m := gin.Default()
 
-	setupDb()
 	setupRoutes(m)
 
 	port := os.Getenv("PORT")

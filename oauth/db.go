@@ -2,10 +2,10 @@ package oauth
 
 import (
 	"dropler/models/token"
-	"github.com/begizi/gorp"
+	"dropler/store"
 )
 
-func SetupDb(g *gorp.DbMap) {
-	g.AddTableWithName(models.Token{}, "access_tokens").SetKeys(true, "Id")
+func init() {
+	store.Db.AddTableWithName(models.Token{}, "access_tokens").SetKeys(true, "Id")
 	return
 }
