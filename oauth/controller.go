@@ -3,10 +3,11 @@ package oauth
 import (
 	"dropler/users"
 	"fmt"
-	"github.com/RangelReale/osin"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/url"
+
+	"github.com/RangelReale/osin"
+	"github.com/gin-gonic/gin"
 )
 
 func Authorize(c *gin.Context) {

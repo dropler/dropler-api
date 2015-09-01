@@ -6,7 +6,7 @@ import (
 	"log"
 	"strings"
 
-	"code.google.com/p/go.crypto/bcrypt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // User model struct

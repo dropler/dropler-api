@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 	"log"
 
-	"code.google.com/p/go-uuid/uuid"
+	"github.com/pborman/uuid"
 )
 
 // Client model struct
