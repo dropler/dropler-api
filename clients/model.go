@@ -1,11 +1,12 @@
 package clients
 
 import (
-	"code.google.com/p/go-uuid/uuid"
-	"dropler/models/time"
 	"dropler/store"
+	"dropler/time"
 	"encoding/base64"
 	"log"
+
+	"code.google.com/p/go-uuid/uuid"
 )
 
 // Client model struct

@@ -1,8 +1,8 @@
 package oauth
 
 import (
-	"dropler/models/token"
 	"dropler/store"
+	"dropler/token"
 )
 
 func init() {

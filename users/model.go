@@ -1,11 +1,12 @@
 package users
 
 import (
-	"code.google.com/p/go.crypto/bcrypt"
-	"dropler/models/time"
 	"dropler/store"
+	"dropler/time"
 	"log"
 	"strings"
+
+	"code.google.com/p/go.crypto/bcrypt"
 )
 
 // User model struct

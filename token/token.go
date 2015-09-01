@@ -2,7 +2,7 @@ package models
 
 import (
 	"dropler/clients"
-	"dropler/models/time"
+	"dropler/time"
 )
 
 // Token struct
