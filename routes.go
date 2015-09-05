@@ -11,8 +11,12 @@ import (
 )
 
 func setupRoutes(r *gin.Engine) {
-	apiGroup := r.Group("/api")
-	oauthGroup := r.Group("/oauth")
+
+	// API versioning
+	v := r.Group("/v1")
+
+	apiGroup := v.Group("/api")
+	oauthGroup := v.Group("/oauth")
 
 	// api group requires user authentication
 	apiGroup.Use(AuthRequired())
