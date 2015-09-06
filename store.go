@@ -1,10 +1,11 @@
-package store
+package main
 
 import (
 	"database/sql"
-	"github.com/begizi/gorp"
 	"log"
 	"os"
+
+	"github.com/begizi/gorp"
 
 	// Database needed in sub-package, store
 	_ "github.com/lib/pq"
@@ -14,6 +15,13 @@ var (
 	// Db is a global variable to access the db context
 	Db = NewDbContext()
 )
+
+func init() {
+	Db.AddTableWithName(User{}, "users").SetKeys(true, "Id")
+	Db.AddTableWithName(Token{}, "access_tokens").SetKeys(true, "Id")
+	Db.AddTableWithName(Drop{}, "drops").SetKeys(true, "Id")
+	Db.AddTableWithName(Client{}, "clients").SetKeys(true, "Id")
+}
 
 // NewDbContext establishes the database configuration
 func NewDbContext() *gorp.DbMap {

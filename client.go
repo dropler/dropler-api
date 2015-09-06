@@ -1,11 +1,12 @@
-package clients
+package main
 
 import (
-	"dropler/store"
-	"dropler/time"
+	"dropler/utils/time"
 	"encoding/base64"
 	"log"
 
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/pborman/uuid"
 )
 
@@ -24,7 +25,7 @@ type ClientList []Client
 
 // Fetch Method to return all clients from the db
 func (c *ClientList) List() error {
-	_, err := store.Db.Select(c, "SELECT * FROM CLIENTS ORDER BY CreatedAt DESC")
+	_, err := Db.Select(c, "SELECT * FROM CLIENTS ORDER BY CreatedAt DESC")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,20 +45,20 @@ func (c *Client) Create() error {
 	c.GenerateClientSecret()
 
 	// run the DB insert function
-	err := store.Db.Insert(c)
+	err := Db.Insert(c)
 
 	return err
 }
 
 func (c *Client) GetById(id string) error {
-	err := store.Db.SelectOne(c, "SELECT * FROM clients WHERE ID=$1", id)
+	err := Db.SelectOne(c, "SELECT * FROM clients WHERE ID=$1", id)
 	return err
 }
 
 // GetClientByID Method for returning a single client row.
 func (c *Client) GetClientByID(id string) error {
 
-	err := store.Db.SelectOne(c, "SELECT * FROM clients WHERE ClientID=$1", id)
+	err := Db.SelectOne(c, "SELECT * FROM clients WHERE ClientID=$1", id)
 
 	return err
 }
@@ -91,4 +92,48 @@ func (c Client) GetSecret() string {
 
 func (c Client) GetUserData() interface{} {
 	return c.User
+}
+
+// List Method for returning all clients as array of objects
+func ListClient(c *gin.Context) {
+	d := ClientList{}
+
+	err := d.List()
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Problem fetching clients. No database connection?"})
+		return
+	}
+
+	c.JSON(200, d)
+	return
+}
+
+// Create Method for creating a new client
+func CreateClient(c *gin.Context) {
+	d := Client{}
+
+	// Bind the incoming form data with the client model
+	c.BindWith(&d, binding.Form)
+
+	err := d.Create()
+	if err != nil {
+		panic(err)
+	}
+
+	// Return the client model as json to the client
+	c.JSON(200, d)
+	return
+}
+
+func GetClient(c *gin.Context) {
+	d := Client{}
+	id := c.Params.ByName("id")
+
+	err := d.GetById(id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Problem fetching client. No database connection?"})
+		return
+	}
+
+	c.JSON(200, d)
 }

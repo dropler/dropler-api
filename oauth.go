@@ -1,16 +1,63 @@
-package oauth
+package main
 
 import (
-	"dropler/clients"
 	"errors"
 	"fmt"
+
 	"github.com/RangelReale/osin"
+	"github.com/gin-gonic/gin"
 )
 
 var (
 	// OauthServer public instance of an osin.Server
 	OauthServer = newAuthServer()
 )
+
+func AccessToken(c *gin.Context) {
+	var (
+		oauth = OauthServer
+		resp  = oauth.NewResponse()
+	)
+	defer resp.Close()
+
+	if ar := oauth.HandleAccessRequest(resp, c.Request); ar != nil {
+		switch ar.Type {
+		case osin.AUTHORIZATION_CODE:
+			ar.Authorized = true
+		case osin.REFRESH_TOKEN:
+			ar.Authorized = true
+		case osin.PASSWORD:
+			if authorizeUser(ar.Username, ar.Password) {
+				ar.Authorized = true
+			}
+		case osin.CLIENT_CREDENTIALS:
+			ar.Authorized = true
+		}
+		oauth.FinishAccessRequest(resp, c.Request, ar)
+	}
+
+	if resp.IsError && resp.InternalError != nil {
+		fmt.Printf("ERROR: %s\n", resp.InternalError)
+	}
+
+	osin.OutputJSON(resp, c.Writer, c.Request)
+}
+
+func authorizeUser(username, password string) bool {
+	var u User
+
+	err := u.FindByEmail(username)
+	if err != nil {
+		return false
+	}
+
+	err = u.CheckPassword(password)
+	if err != nil {
+		return false
+	}
+
+	return true
+}
 
 func newAuthServer() *osin.Server {
 	authConfig := osin.NewServerConfig()
@@ -43,7 +90,7 @@ func (s *oauthStorage) Close() {
 func (s *oauthStorage) GetClient(id string) (osin.Client, error) {
 	fmt.Printf("GetClient: %s\n", id)
 
-	c := clients.Client{}
+	c := Client{}
 
 	err := c.GetClientByID(id)
 	if err != nil {

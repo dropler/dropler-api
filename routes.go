@@ -1,30 +1,32 @@
 package main
 
-import (
-	"dropler/account"
-	"dropler/clients"
-	"dropler/drops"
-	"dropler/oauth"
-	"dropler/users"
-
-	"github.com/gin-gonic/gin"
-)
+import "github.com/gin-gonic/gin"
 
 func setupRoutes(r *gin.Engine) {
 
 	// API versioning
 	v := r.Group("/v1")
 
-	apiGroup := v.Group("/api")
-	oauthGroup := v.Group("/oauth")
+	o := r.Group("/oauth")
 
 	// api group requires user authentication
-	apiGroup.Use(AuthRequired())
+	v.Use(AuthRequired())
 
-	clients.SetupRoutes(apiGroup)
-	drops.SetupRoutes(apiGroup)
-	account.SetupRoutes(apiGroup)
-	users.SetupRoutes(apiGroup)
+	// Application Routes
+	o.GET("/access_token", AccessToken)
 
-	oauth.SetupRoutes(oauthGroup)
+	v.GET("/users", ListUser)
+	v.POST("/users", CreateUser)
+	v.GET("/users/:id", GetUser)
+
+	v.GET("/drops", ListDrop)
+	v.POST("/drops", CreateDrop)
+	v.GET("/drops/:id", GetDrop)
+
+	v.GET("/clients", ListClient)
+	v.POST("/clients", CreateClient)
+	v.GET("/clients/:id", GetClient)
+
+	v.GET("/account", ListAccount)
+	v.PUT("/account", UpdateAccount)
 }
