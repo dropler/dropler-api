@@ -5,5 +5,5 @@ import (
 )
 
 func SetupRoutes(r *gin.RouterGroup) {
-	r.GET("/token", Token)
+	r.GET("/access_token", Token)
 }
