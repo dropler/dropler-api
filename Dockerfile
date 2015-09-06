@@ -13,8 +13,12 @@ RUN go get dropler
 # either manually or with a tool like "godep".)
 RUN go install dropler
 
-# Run the outyet command by default when the container starts.
-ENTRYPOINT /go/bin/dropler
+# Port
+ENV PORT=8080
 
 # Document that the service listens on port 8080.
 EXPOSE 8080
+
+CMD []
+ENTRYPOINT /go/bin/dropler
+
