@@ -1,8 +1,6 @@
 package main
 
-import (
-	"dropler/utils/time"
-)
+import "droppio/utils/time"
 
 // Token struct
 type Token struct {

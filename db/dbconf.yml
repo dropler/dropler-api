@@ -1,14 +1,14 @@
 test:
     driver: postgres
-    open: user=begizi dbname=dropler_dev sslmode=disable
+    open: user=begizi dbname=droppio_dev sslmode=disable
 
 development:
     driver: postgres
-    open: user=begizi dbname=dropler_dev sslmode=disable
+    open: user=begizi dbname=droppio_dev sslmode=disable
 
 production:
     driver: postgres
-    open: user=begizi dbname=dropler sslmode=disable
+    open: user=begizi dbname=droppio sslmode=disable
 
 environment_variable_config:
     driver: $DB_DRIVER

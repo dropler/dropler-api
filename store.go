@@ -25,7 +25,7 @@ func init() {
 
 // NewDbContext establishes the database configuration
 func NewDbContext() *gorp.DbMap {
-	db, err := sql.Open("postgres", "dbname=dropler_dev sslmode=disable")
+	db, err := sql.Open("postgres", "dbname=droppio_dev sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,15 +3,15 @@
 FROM golang
 
 # Copy the local package files to the container's workspace.
-ADD . /go/src/dropler
+ADD . /go/src/droppio
 
 # Deps
-RUN go get dropler
+RUN go get droppio
 
 # Build the outyet command inside the container.
 # (You may fetch or manage dependencies here,
 # either manually or with a tool like "godep".)
-RUN go install dropler
+RUN go install droppio
 
 # Port
 ENV PORT=8080
@@ -20,5 +20,5 @@ ENV PORT=8080
 EXPOSE 8080
 
 CMD []
-ENTRYPOINT /go/bin/dropler
+ENTRYPOINT /go/bin/droppio
 

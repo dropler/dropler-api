@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dropler/utils/time"
+	"droppio/utils/time"
 	"fmt"
 	"log"
 	"strings"
