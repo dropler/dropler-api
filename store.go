@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/begizi/gorp"
+	"gopkg.in/gorp.v1"
 
 	// Database needed in sub-package, store
 	_ "github.com/lib/pq"
@@ -19,8 +19,11 @@ var (
 func init() {
 	Db.AddTableWithName(User{}, "users").SetKeys(true, "Id")
 	Db.AddTableWithName(Token{}, "access_tokens").SetKeys(true, "Id")
-	Db.AddTableWithName(Drop{}, "drops").SetKeys(true, "Id")
 	Db.AddTableWithName(Client{}, "clients").SetKeys(true, "Id")
+
+	// Drop Table
+	dropTable := Db.AddTableWithName(Drop{}, "drops").SetKeys(true, "Id")
+	dropTable.ColMap("DropGeom").SetTransient(true)
 }
 
 // NewDbContext establishes the database configuration

@@ -14,7 +14,7 @@ type Drop struct {
 	Latitude  float32 `form:"lat"json:"lat"`
 	Longitude float32 `form:"long"json:"long"`
 	Radius    int     `form:"radius"json:"radius"`
-	DropGeom  string  `form:"-"json:"-"db:",transient"`
+	DropGeom  string  `form:"-"json:"-"`
 	models.TimeStamp
 }
 
