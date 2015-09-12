@@ -124,6 +124,19 @@ func (s *oauthStorage) RemoveAuthorize(code string) error {
 
 func (s *oauthStorage) SaveAccess(data *osin.AccessData) error {
 	fmt.Printf("SaveAccess: %s\n", data.AccessToken)
+	accessToken := Token{
+		ClientID:    data.Client.GetId(),
+		Code:        data.AccessToken,
+		ExpiresIn:   data.ExpiresIn,
+		Scope:       data.Scope,
+		RedirectUri: data.RedirectUri,
+	}
+
+	err := accessToken.Insert()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
