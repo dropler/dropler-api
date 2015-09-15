@@ -13,7 +13,7 @@ func setupRoutes(r *gin.Engine) {
 	v.Use(AuthRequired())
 
 	// Application Routes
-	o.GET("/access_token", AccessToken)
+	o.GET("/access_token", GetAccessToken)
 
 	v.GET("/users", ListUser)
 	v.POST("/users", CreateUser)

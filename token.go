@@ -2,19 +2,18 @@ package main
 
 import "droppio/utils/time"
 
-// Token struct
-type Token struct {
-	Id          int64  `json:"id"db:"Id"`
-	ClientID    string `json:"client"db:"-"`
-	Code        string `json:"access_code"`
-	ExpiresIn   int32  `json:"expires"`
-	Scope       string `json:"scope"`
-	RedirectUri string `json:"redirect_uri"`
-	State       string `json:"state"`
+// AccessToken struct
+type AccessToken struct {
+	Id        int64  `json:"id"db:"Id"`
+	UserID    int64  `json:"user"`
+	Token     string `json:"access_token"`
+	ClientID  string `json:"client"`
+	ExpiresIn int32  `json:"expires"`
+	Scope     string `json:"scope"`
 	models.TimeStamp
 }
 
-func (t *Token) Insert() error {
+func (t *AccessToken) Insert() error {
 	t.UpdateTime()
 
 	// run the DB insert function
@@ -26,11 +25,19 @@ func (t *Token) Insert() error {
 	return nil
 }
 
-func (t *Token) GetByCode(code string) error {
-	err := Db.SelectOne(t, "SELECT * FROM access_tokens WHERE code=$1", code)
+func GetUserByAccessToken(code string) (*User, error) {
+	t := &AccessToken{}
+	err := Db.SelectOne(t, "SELECT * FROM access_tokens WHERE Token=$1", code)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	u := &User{}
+
+	err = u.GetById(t.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	return u, nil
 }

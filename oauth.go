@@ -13,7 +13,7 @@ var (
 	OauthServer = newAuthServer()
 )
 
-func AccessToken(c *gin.Context) {
+func GetAccessToken(c *gin.Context) {
 	var (
 		oauth = OauthServer
 		resp  = oauth.NewResponse()
@@ -27,7 +27,8 @@ func AccessToken(c *gin.Context) {
 		case osin.REFRESH_TOKEN:
 			ar.Authorized = true
 		case osin.PASSWORD:
-			if authorizeUser(ar.Username, ar.Password) {
+			if user := authorizeUser(ar.Username, ar.Password); user != nil {
+				ar.UserData = user
 				ar.Authorized = true
 			}
 		case osin.CLIENT_CREDENTIALS:
@@ -43,20 +44,20 @@ func AccessToken(c *gin.Context) {
 	osin.OutputJSON(resp, c.Writer, c.Request)
 }
 
-func authorizeUser(username, password string) bool {
-	var u User
+func authorizeUser(username, password string) *User {
+	u := &User{}
 
 	err := u.FindByEmail(username)
 	if err != nil {
-		return false
+		return nil
 	}
 
 	err = u.CheckPassword(password)
 	if err != nil {
-		return false
+		return nil
 	}
 
-	return true
+	return u
 }
 
 func newAuthServer() *osin.Server {
@@ -124,12 +125,15 @@ func (s *oauthStorage) RemoveAuthorize(code string) error {
 
 func (s *oauthStorage) SaveAccess(data *osin.AccessData) error {
 	fmt.Printf("SaveAccess: %s\n", data.AccessToken)
-	accessToken := Token{
-		ClientID:    data.Client.GetId(),
-		Code:        data.AccessToken,
-		ExpiresIn:   data.ExpiresIn,
-		Scope:       data.Scope,
-		RedirectUri: data.RedirectUri,
+	fmt.Println("User Data: ", data.UserData)
+	u := data.UserData.(*User)
+
+	accessToken := AccessToken{
+		UserID:    u.ID,
+		Token:     data.AccessToken,
+		ClientID:  data.Client.GetId(),
+		ExpiresIn: data.ExpiresIn,
+		Scope:     data.Scope,
 	}
 
 	err := accessToken.Insert()

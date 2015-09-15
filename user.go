@@ -4,6 +4,7 @@ import (
 	"droppio/utils/time"
 	"fmt"
 	"log"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -57,7 +58,7 @@ func (u *User) Insert(password string) error {
 	return nil
 }
 
-func (u *User) GetById(id string) error {
+func (u *User) GetById(id int64) error {
 	err := Db.SelectOne(u, "SELECT * FROM users WHERE id=$1", id)
 	if err != nil {
 		return err
@@ -128,7 +129,13 @@ func GetUser(c *gin.Context) {
 	u := User{}
 	id := c.Params.ByName("id")
 
-	err := u.GetById(id)
+	intid, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		c.JSON(500, err)
+		return
+	}
+
+	err = u.GetById(intid)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "Problem fetching users. No database connection?"})
 		return

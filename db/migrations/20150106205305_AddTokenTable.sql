@@ -3,11 +3,11 @@
 -- SQL in section 'Up' is executed when this migration is applied
 CREATE TABLE IF NOT EXISTS access_tokens (
   Id            serial primary key,
-  Code          varchar(255),
+  Token         varchar(255),
+  UserID        integer,
+  ClientID      varchar,
   ExpiresIn     integer,
   Scope         varchar(255),
-  RedirectUri   varchar(255),
-  State         varchar(255),
   CreatedAt     timestamp not null default now(),
   UpdatedAt     timestamp not null default now()
 );

@@ -18,7 +18,7 @@ var (
 
 func init() {
 	Db.AddTableWithName(User{}, "users").SetKeys(true, "Id")
-	Db.AddTableWithName(Token{}, "access_tokens").SetKeys(true, "Id")
+	Db.AddTableWithName(AccessToken{}, "access_tokens").SetKeys(true, "Id")
 	Db.AddTableWithName(Client{}, "clients").SetKeys(true, "Id")
 
 	// Drop Table
