@@ -3,16 +3,25 @@ package main
 import (
 	"fmt"
 
+	"github.com/RangelReale/osin"
 	"github.com/gin-gonic/gin"
 )
 
 // Authentication Middleware
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		// Get the code from either the post body or query param
-		code := c.PostForm("access_token")
+		code := c.Query("access_token")
+
+		if b := osin.CheckBearerAuth(c.Request); b != nil {
+			code = b.Code
+		}
+
 		if code == "" {
-			code = c.Query("access_token")
+			c.JSON(401, gin.H{"message": "Not authorized", "error": "No access_token provided"})
+			c.AbortWithStatus(401)
+			return
 		}
 
 		u, err := GetUserByAccessToken(code)
@@ -24,7 +33,6 @@ func AuthRequired() gin.HandlerFunc {
 			return
 		}
 
-		//TODO: Authenticate user and token and load user into context state c.Set('user', User{})
 		c.Set("user", u)
 	}
 }
