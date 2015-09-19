@@ -29,4 +29,7 @@ func setupRoutes(r *gin.Engine) {
 
 	v.GET("/account", ListAccount)
 	v.PUT("/account", UpdateAccount)
+
+	v.GET("/media/:id", GetMedia)
+	v.POST("/media", UploadMedia)
 }
